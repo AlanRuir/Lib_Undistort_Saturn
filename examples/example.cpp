@@ -1,6 +1,5 @@
 #include <iostream>
-#include <opencv2/opencv.hpp>
-#include "camera_params.h"
+#include <chrono>
 #include "undistort.h"
 
 int main()
@@ -18,7 +17,11 @@ int main()
 
     // 进行去畸变处理
     Undistort undistorter(param_file);
+    auto start = std::chrono::high_resolution_clock::now();
     cv::Mat undistorted_image = undistorter.processFrame(input_image);
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed = end - start;
+    std::cout << "Undistortion took " << elapsed.count() << " seconds." << std::endl;
 
     // 显示结果
     cv::imshow("Original Image", input_image);

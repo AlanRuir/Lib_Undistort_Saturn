@@ -1,23 +1,18 @@
-#include "camera_params.h"
 #include <iostream>
+#include <opencv2/opencv.hpp>
+#include "camera_params.h"
 
 bool CameraParams::load(const std::string &filename, cv::Mat &camera_matrix, cv::Mat &dist_coeffs)
 {
-    std::cout << __LINE__ << std::endl;
-
     std::cout << "param path: " << filename << std::endl;
 
     cv::FileStorage fs(filename, cv::FileStorage::READ);
-
-    std::cout << __LINE__ << std::endl;
 
     if (!fs.isOpened())
     {
         std::cerr << "Failed to open camera parameters file: " << filename << std::endl;
         return false;
     }
-
-    std::cout << __LINE__ << std::endl;
 
     fs["camera_matrix"] >> camera_matrix;
     fs["distortion_coefficients"] >> dist_coeffs;
