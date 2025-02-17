@@ -12,3 +12,5 @@ distortion_coefficients: !!opencv-matrix
     dt: d
     data: [ 0.06494872859950979, 0.0019246522662558574, 
             -0.012888995393555109, 0.002060082123840094 ]
+image_width: 1280
+image_height: 720

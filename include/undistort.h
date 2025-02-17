@@ -12,6 +12,9 @@ public:
 private:
     cv::Mat camera_matrix_;
     cv::Mat dist_coeffs_;
+    cv::Mat map_x_;
+    cv::Mat map_y_;
+    cv::Size image_size_;
 };
 
 #endif // __UNDISTORT_H__

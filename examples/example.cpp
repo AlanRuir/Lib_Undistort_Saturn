@@ -1,9 +1,12 @@
 #include <iostream>
 #include <chrono>
+#include <thread>
 #include "undistort.h"
 
 int main()
 {
+    cv::Mat undistorted_image;
+
     std::string param_file = "../examples/camera_params.yml"; // 相机参数文件
 
     // 读取测试图像
@@ -17,11 +20,17 @@ int main()
 
     // 进行去畸变处理
     Undistort undistorter(param_file);
-    auto start = std::chrono::high_resolution_clock::now();
-    cv::Mat undistorted_image = undistorter.processFrame(input_image);
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed = end - start;
-    std::cout << "Undistortion took " << elapsed.count() << " seconds." << std::endl;
+
+    for (size_t i = 0; i < 10000U; ++i)
+    {
+        auto start = std::chrono::high_resolution_clock::now();
+        undistorted_image = undistorter.processFrame(input_image);
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed = end - start;
+        std::cout << "Undistortion took " << elapsed.count() << " seconds." << std::endl;
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(33));
+    }
 
     // 显示结果
     cv::imshow("Original Image", input_image);
